@@ -25,6 +25,10 @@ Initial release
 
 Add ReadMe
 
+### 0.2.0
+
+Add status bar
+
 ## Source code
 
 Available on github: https://github.com/welkineins/vscode-astyle

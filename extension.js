@@ -5,6 +5,10 @@ const childProcess = require('child_process');
 const diffMatchPatch = require('diff-match-patch');
 
 class AstyleFormatter {
+    constructor() {
+        this.statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+    }
+
     // interface required by vscode.DocumentFormattingEditProvider
     provideDocumentFormattingEdits(document, options, token) {
         return new Promise((resolve, reject) => {
@@ -23,7 +27,9 @@ class AstyleFormatter {
                     return;
                 }
 
-                resolve(this.generateTextEditors(document, stdout));
+                let editors = this.generateTextEditors(document, stdout);
+                this.updateStatusBar(editors);
+                resolve(editors);
             });
 
             if (astyle.pid) {
@@ -71,6 +77,24 @@ class AstyleFormatter {
 
         return editors;
     }
+
+    updateStatusBar(editors) {
+        if (editors.length == 0) {
+            this.statusBar.text = 'No changes';
+        } else {
+            this.statusBar.text = '$(pencil) Formatted';
+        }
+
+        this.statusBar.show();
+
+        setTimeout(() => {
+            this.statusBar.hide();
+        }, 500);
+    }
+
+    dispose() {
+        this.statusBar.dispose();
+    }
 };
 
 // this method is called when your extension is activated
@@ -88,6 +112,8 @@ function activate(context) {
         let disposable = vscode.languages.registerDocumentFormattingEditProvider(language, formatter);
         context.subscriptions.push(disposable);
     });
+
+    context.subscriptions.push(formatter);
 }
 
 exports.activate = activate;
