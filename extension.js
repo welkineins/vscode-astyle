@@ -1,46 +1,35 @@
-const vscode         = require('vscode');
-const fs             = require('fs');
-const path           = require('path');
-const childProcess   = require('child_process');
+const vscode = require('vscode');
+const fs = require('fs');
+const path = require('path');
+const childProcess = require('child_process');
 const diffMatchPatch = require('diff-match-patch');
 
 class AstyleFormatter {
     // interface required by vscode.DocumentFormattingEditProvider
     provideDocumentFormattingEdits(document, options, token) {
         return new Promise((resolve, reject) => {
-            let astyleBinPath = "D:\\AStyle.exe";
+            let astyleBinPath = vscode.workspace.getConfiguration('astyle')['executable'] || 'astyle';
             let args = [];
-            let astyle = childProcess.spawn(astyleBinPath, args);
-            let out = "", err = "";
-
-            astyle.stdin.write(document.getText());
-            astyle.stdin.end();
-
-            astyle.stdout.on('data', (data) => {
-                out += data;
-            });
-
-            astyle.stderr.on('data', (data) => {
-                err += data;
-            });
-
-            astyle.on('close', (code) => {
-                if (code !== 0) {
-                    reject('Failed to format file. (code: ' + code + ', reason: ' + err + ')');
-                } else {
-                    resolve(this.generateTextEditors(document, out));
-                }
-            });
-
-            astyle.on('error', (err) => {
-                if (err.code == 'ENOENT') {
+            let astyle = childProcess.execFile(astyleBinPath, args, {}, (err, stdout, stderr) => {
+                if (err && err.code == 'ENOENT') {
                     vscode.window.showErrorMessage('Can\'t found astyle.');
-                } else {
-                    vscode.window.showErrorMessage('Failed to launch astyle. (code: ' + err.code + ')');
+                    reject(null);
+                    return;
                 }
 
-                reject(err);
+                if (err) {
+                    vscode.window.showErrorMessage('Failed to launch astyle. (code: ' + err.code + ')');
+                    reject(null);
+                    return;
+                }
+
+                resolve(this.generateTextEditors(document, stdout));
             });
+
+            if (astyle.pid) {
+                astyle.stdin.write(document.getText());
+                astyle.stdin.end();
+            }
         });
     }
 
@@ -55,21 +44,21 @@ class AstyleFormatter {
             let text = diff[1];
             let start = new vscode.Position(line, character);
 
-            for(let c of text) {
+            for (let c of text) {
                 if (c === '\n') {
-                    character = 0;
                     line++;
+                    character = 0;
                 } else {
                     character++;
                 }
             }
 
-            switch(op) {
+            switch (op) {
                 case diffMatchPatch.DIFF_INSERT:
                     editors.push(vscode.TextEdit.insert(start, text));
                     // this new part should not affect counting of original document
-                    character = start.character;
                     line = start.line;
+                    character = start.character;
                     break;
                 case diffMatchPatch.DIFF_DELETE:
                     let end = new vscode.Position(line, character);
@@ -89,7 +78,13 @@ class AstyleFormatter {
 function activate(context) {
     let formatter = new AstyleFormatter();
 
-    ["cpp", "c", "objective-c", "csharp", "java"].forEach(function(language) {
+    ["c", "cpp", "objective-c", "csharp", "java"].forEach(function (language) {
+        let config = vscode.workspace.getConfiguration('astyle')[language];
+
+        if (!config.enable) {
+            return;
+        }
+
         let disposable = vscode.languages.registerDocumentFormattingEditProvider(language, formatter);
         context.subscriptions.push(disposable);
     });

@@ -4,11 +4,24 @@
     "description": "Format C/C++/Obj-C/C#/Java code with Astyle in VSCode",
     "version": "0.1.0",
     "publisher": "chiehyu",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/welkineins/vscode-astyle"
+    },
+    "license": "MIT",
     "engines": {
         "vscode": "^1.0.0"
     },
     "categories": [
-        "Other"
+        "Other",
+        "Languages"
+    ],
+    "keywords": [
+        "C",
+        "C++",
+        "Objective-C",
+        "C#",
+        "Java"
     ],
     "activationEvents": [
         "onLanguage:cpp",
@@ -19,6 +32,42 @@
     ],
     "main": "./extension",
     "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Astyle configuration",
+            "properties": {
+                "astyle.executable": {
+                    "type": "string",
+                    "default": "astyle",
+                    "description": "astyle executable path"
+                },
+                "astyle.c.enable": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "enable C formatting"
+                },
+                "astyle.cpp.enable": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "enable C++ formatting"
+                },
+                "astyle.objective-c.enable": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "enable Object-C formatting"
+                },
+                "astyle.csharp.enable": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "enable C# formatting"
+                },
+                "astyle.java.enable": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "enable Java formatting"
+                }
+            }
+        }
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install"
