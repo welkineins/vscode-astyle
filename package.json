@@ -1,0 +1,29 @@
+{
+    "name": "vscode-astyle",
+    "displayName": "Astyle",
+    "description": "Format C/C++/Obj-C code with Astyle in VSCode",
+    "version": "0.0.1",
+    "publisher": "welkineins",
+    "engines": {
+        "vscode": "^1.0.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.sayHello"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "commands": [{
+            "command": "extension.sayHello",
+            "title": "Hello World"
+        }]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "vscode": "^0.11.0"
+    }
+}
