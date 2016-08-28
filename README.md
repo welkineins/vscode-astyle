@@ -30,6 +30,11 @@ Add ReadMe
 
 Add status bar
 
+### 0.2.1
+
+Update ReadMe
+
 ## Source code
 
 Available on github: https://github.com/welkineins/vscode-astyle
+Issue on github: https://github.com/welkineins/vscode-astyle/issues
