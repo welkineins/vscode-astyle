@@ -13,14 +13,13 @@ class AstyleFormatter {
     provideDocumentFormattingEdits(document, options, token) {
         return new Promise((resolve, reject) => {
             let astyleBinPath = vscode.workspace.getConfiguration('astyle')['executable'] || 'astyle';
+            let astyleRcPath = vscode.workspace.getConfiguration('astyle')['astylerc'];
             let args = [];
-            if (vscode.workspace.rootPath != "undefined") {
-                let filename = vscode.workspace.rootPath + "/.vscode/astylerc";
-                let stats = fs.lstatSync(filename);
-                if (stats.isFile()) {
-                    args.push("--options=" + filename);
-                }
+
+            if (astyleRcPath) {
+                args.push("--options=" + astyleRcPath.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath));
             }
+
             let astyle = childProcess.execFile(astyleBinPath, args, {}, (err, stdout, stderr) => {
                 if (err && err.code == 'ENOENT') {
                     vscode.window.showErrorMessage('Can\'t found astyle.');
@@ -29,7 +28,7 @@ class AstyleFormatter {
                 }
 
                 if (err) {
-                    vscode.window.showErrorMessage('Failed to launch astyle. (code: ' + err.code + ')');
+                    vscode.window.showErrorMessage('Failed to launch astyle. (reason: "' + stderr.split('\n')[0] + '")');
                     reject(null);
                     return;
                 }

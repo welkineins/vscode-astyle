@@ -11,28 +11,30 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 ## How to Start
 
 1. Download Astyle from http://astyle.sourceforge.net/. (On Linux, you can use apt-get)
-1. Prepare your style by editting astylerc. (http://astyle.sourceforge.net/astyle.html#_Options_File)
+1. Prepare your style by editting astylerc and put it in the search path. (see the link first: http://astyle.sourceforge.net/astyle.html#_Options_File)
 1. Make sure Astyle executable is in your system $PATH or add path to configration. 
 1. Enable supported languages in configration. (C and C++ are enabled by default)
 1. When you open a supoprted language file, you can find 'Format' in context menu or just shortcut Shift-Alt-F.
 
+## Configuration
+
+- `astyle.astylerc`: specify path of astylerc file. ${workspaceRoot} is supported to enable using different astyle file between projects. e.g. '${workspaceRoot}/.vscode/astylerc'. (default: null, lookup astylerc in original order of astyle)
+
 ## Release Notes
 
-### 0.1.0
+### 0.1
 
-Initial release 
+- Initial release
+- Add ReadMe
 
-### 0.1.1
+### 0.2
 
-Add ReadMe
+- Add status bar
+- Update ReadMe
 
-### 0.2.0
+### 0.3
 
-Add status bar
-
-### 0.2.1
-
-Update ReadMe
+- Add options `astyle.astylerc` for lookup astylerc path. (which is same as --options=`path`)
 
 ## Source code
 

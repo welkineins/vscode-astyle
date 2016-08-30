@@ -2,7 +2,7 @@
     "name": "vscode-astyle",
     "displayName": "Astyle",
     "description": "Format C/C++/Obj-C/C#/Java code with Astyle in VSCode",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "publisher": "chiehyu",
     "repository": {
         "type": "git",
@@ -40,6 +40,11 @@
                     "type": "string",
                     "default": "astyle",
                     "description": "astyle executable path"
+                },
+                "astyle.astylerc": {
+                    "type": ["string", "null"],
+                    "default": null,
+                    "description": "astylerc path (set to null for default lookup order)"
                 },
                 "astyle.c.enable": {
                     "type": "boolean",
