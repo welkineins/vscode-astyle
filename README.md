@@ -19,6 +19,7 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 ## Configuration
 
 - `astyle.astylerc`: specify path of astylerc file. ${workspaceRoot} is supported to enable using different astyle file between projects. e.g. '${workspaceRoot}/.vscode/astylerc'. (default: null, lookup astylerc in original order of astyle)
+- `astyle.cmd_options`: array of command line options for astyle. (You should avoid conflicted options) For example: `["--indent=tab", "--break-blocks"]`
 
 ## Release Notes
 
@@ -34,7 +35,11 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 
 ### 0.3
 
-- Add options `astyle.astylerc` for lookup astylerc path. (which is same as --options=`path`)
+- Add option `astyle.astylerc` for lookup astylerc path. (which is same as --options=`path`)
+
+### 0.4
+
+- Add option `astyle.cmd_options` for passing options to astyle command line.
 
 ## Source code
 

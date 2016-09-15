@@ -14,7 +14,7 @@ class AstyleFormatter {
         return new Promise((resolve, reject) => {
             let astyleBinPath = vscode.workspace.getConfiguration('astyle')['executable'] || 'astyle';
             let astyleRcPath = vscode.workspace.getConfiguration('astyle')['astylerc'];
-            let args = [];
+            let args = vscode.workspace.getConfiguration('astyle')['cmd_options'] || [];
 
             if (astyleRcPath) {
                 args.push("--options=" + astyleRcPath.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath));
