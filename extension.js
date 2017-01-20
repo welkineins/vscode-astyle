@@ -22,7 +22,7 @@ class AstyleFormatter {
 
             let astyle = childProcess.execFile(astyleBinPath, args, {}, (err, stdout, stderr) => {
                 if (err && err.code == 'ENOENT') {
-                    vscode.window.showErrorMessage('Can\'t found astyle.');
+                    vscode.window.showErrorMessage('Can\'t find astyle.');
                     reject(null);
                     return;
                 }
