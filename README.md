@@ -20,6 +20,7 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 
 - `astyle.astylerc`: specify path of astylerc file. ${workspaceRoot} is supported to enable using different astyle file between projects. e.g. '${workspaceRoot}/.vscode/astylerc'. (default: null, lookup astylerc in original order of astyle)
 - `astyle.cmd_options`: array of command line options for astyle. (You should avoid conflicted options) For example: `["--indent=tab", "--break-blocks"]`
+- `astyle.additional_languages`: array of additional languages to use astyle as code formatter. For example: `["haxe"]`. (You don't have to enable the language in astyle config)
 
 ## Release Notes
 
@@ -31,7 +32,6 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 ### 0.2
 
 - Add status bar
-- Update ReadMe
 
 ### 0.3
 
@@ -44,6 +44,10 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 ### 0.5 
 
 - ${workspaceRoot} variable substitution is available for `astyle.cmd_options`, `astyle.executable` options
+
+### 0.6
+
+- Add option `astyle.additional_languages` for extending supported languages. For example, you can add "haxe" language to use astyle as formatter. (make sure you check astyle can support the language)
 
 ## FAQ
 

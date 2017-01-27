@@ -113,11 +113,12 @@ class AstyleFormatter {
 // your extension is activated the very first time the command is executed
 function activate(context) {
     let formatter = new AstyleFormatter();
+    let additionalLanguages = vscode.workspace.getConfiguration('astyle')['additional_languages'] || [];
 
-    ["c", "cpp", "objective-c", "csharp", "java"].forEach(function (language) {
+    ["c", "cpp", "objective-c", "csharp", "java"].concat(additionalLanguages).forEach(function (language) {
         let config = vscode.workspace.getConfiguration('astyle')[language];
 
-        if (!config.enable) {
+        if (config && !config.enable) {
             return;
         }
 

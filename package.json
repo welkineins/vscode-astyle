@@ -2,7 +2,7 @@
     "name": "vscode-astyle",
     "displayName": "Astyle",
     "description": "Format C/C++/Obj-C/C#/Java code with Astyle in VSCode",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "publisher": "chiehyu",
     "repository": {
         "type": "git",
@@ -50,6 +50,11 @@
                     "type": ["array"],
                     "default": [],
                     "description": "array of command line options"
+                },
+                 "astyle.additional_languages": {
+                    "type": ["array"],
+                    "default": [],
+                    "description": "array of additional languages to use astyle as formatter"
                 },
                 "astyle.c.enable": {
                     "type": "boolean",
