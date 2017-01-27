@@ -2,7 +2,7 @@
     "name": "vscode-astyle",
     "displayName": "Astyle",
     "description": "Format C/C++/Obj-C/C#/Java code with Astyle in VSCode",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "publisher": "chiehyu",
     "repository": {
         "type": "git",
@@ -24,11 +24,7 @@
         "Java"
     ],
     "activationEvents": [
-        "onLanguage:cpp",
-        "onLanguage:c",
-        "onLanguage:objective-c",
-        "onLanguage:csharp",
-        "onLanguage:java"
+        "*"
     ],
     "main": "./extension",
     "contributes": {
