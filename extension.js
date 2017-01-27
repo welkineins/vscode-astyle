@@ -17,12 +17,18 @@ class AstyleFormatter {
             let args = vscode.workspace.getConfiguration('astyle')['cmd_options'] || [];
 
             if (astyleRcPath) {
-                args.push("--options=" + astyleRcPath.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath));
+                args.push("--options=" + astyleRcPath);
             }
+
+            args.forEach((item) => {
+                item = item.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
+            });
+
+            astyleBinPath = astyleBinPath.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
 
             let astyle = childProcess.execFile(astyleBinPath, args, {}, (err, stdout, stderr) => {
                 if (err && err.code == 'ENOENT') {
-                    vscode.window.showErrorMessage('Can\'t found astyle.');
+                    vscode.window.showErrorMessage('Can\'t found astyle. (' + astyleBinPath + ')');
                     reject(null);
                     return;
                 }
