@@ -20,8 +20,8 @@ class AstyleFormatter {
                 args.push("--options=" + astyleRcPath);
             }
 
-            args.forEach((item) => {
-                item = item.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
+            args.forEach((item, index) => {
+                args[index] = item.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
             });
 
             astyleBinPath = astyleBinPath.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
