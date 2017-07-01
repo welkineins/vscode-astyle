@@ -53,7 +53,7 @@ class AstyleFormatter {
 
     generateTextEditors(document, formattedText) {
         let dmp = new diffMatchPatch.diff_match_patch();
-        let diffs = dmp.diff_main(document.getText(), formattedText);
+        let diffs = dmp.diff_main(document.getText(), formattedText.replace(/\r\n|\r|\n/g, document.eol == 2 ? '\r\n' : '\n'));
         let editors = [];
         let line = 0, character = 0;
 

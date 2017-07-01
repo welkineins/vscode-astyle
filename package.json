@@ -2,7 +2,7 @@
     "name": "vscode-astyle",
     "displayName": "Astyle",
     "description": "Format C/C++/Obj-C/C#/Java code with Astyle in VSCode",
-    "version": "0.7.0",
+    "version": "0.7.1",
     "publisher": "chiehyu",
     "repository": {
         "type": "git",
