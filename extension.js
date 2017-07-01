@@ -34,7 +34,7 @@ class AstyleFormatter {
                 }
 
                 if (err) {
-                    vscode.window.showErrorMessage('Failed to launch astyle. (reason: "' + stderr.split('\n')[0] + '")');
+                    vscode.window.showErrorMessage('Failed to launch astyle. (reason: "' + stderr.split(/\r\n|\r|\n/g).join(',') + '")');
                     reject(null);
                     return;
                 }
@@ -61,14 +61,14 @@ class AstyleFormatter {
             let op = diff[0];
             let text = diff[1];
             let start = new vscode.Position(line, character);
+            let lines = text.split(/\r\n|\r|\n/g);
 
-            for (let c of text) {
-                if (c === '\n') {
-                    line++;
-                    character = 0;
-                } else {
-                    character++;
-                }
+            line += lines.length - 1;
+
+            if (lines.length > 1) {
+                character = lines[lines.length - 1].length;
+            } else if (lines.length == 1) {
+                character += lines[0].length;
             }
 
             switch (op) {

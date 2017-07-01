@@ -24,3 +24,8 @@
 ### 0.6
 
 - Add option `astyle.additional_languages` for extending supported languages. For example, you can add "haxe" language to use astyle as formatter. (make sure you check astyle can support the language)
+
+### 0.7
+
+- New way to caculate position to handle different newline on platforms.
+- More detail error message when lauching astyle failed. 
