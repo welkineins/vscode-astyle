@@ -47,6 +47,11 @@
                     "default": [],
                     "description": "array of command line options"
                 },
+				"astyle.max_buffer_multipler": {
+					"type": "string",
+					"default": "2",
+					"description": "the multiplier for the new size of a file after formatting"
+				},
                  "astyle.additional_languages": {
                     "type": ["array"],
                     "default": [],
