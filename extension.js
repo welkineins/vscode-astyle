@@ -33,8 +33,11 @@ class AstyleFormatter {
 
             astyleBinPath = astyleBinPath.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
             
-            // Assume that the formatting/expansion of the document could multiply it's size
-            const maxBufferSize = this.getFilesizeInBytes(document.fileName) * astyleMaxBufferMultiplier;
+            const defaultMaxBufferSize = 200 * 1024;
+            const maxBufferMultiplierSize = this.getFilesizeInBytes(document.fileName) * astyleMaxBufferMultiplier;
+            // Assume that the formatting/expansion of the document could double it's size
+            // Make sure the minimum size is still the default for execFile::maxBuffer
+            const maxBufferSize = Math.max(defaultMaxBufferSize, maxBufferMultiplierSize);
 
             let astyle = childProcess.execFile(astyleBinPath, args, {maxBuffer: maxBufferSize}, (err, stdout, stderr) => {
                 if (err && err.code == 'ENOENT') {
