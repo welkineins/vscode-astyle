@@ -29,3 +29,7 @@
 
 - New way to caculate position to handle different newline on platforms.
 - More detail error message when lauching astyle failed. 
+
+### 0.8
+
+- Support large file format (> 200K). Thanks to @davidritter.
