@@ -20,6 +20,7 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 
 - `astyle.astylerc`: specify path of astylerc file. ${workspaceRoot} is supported to enable using different astyle file between projects. e.g. '${workspaceRoot}/.vscode/astylerc'. (default: null, lookup astylerc in original order of astyle)
 - `astyle.cmd_options`: array of command line options for astyle. (You should avoid conflicted options) For example: `["--indent=tab", "--break-blocks"]`
+- `astyle.max_buffer_multipler`: multiplier to indicate how large an output buffer to allocate for the transformed source code file after Astyle processes it. (default: 2, assumes most formatting/whitespace expansion will result in less than a 2x increase in file size).
 - `astyle.additional_languages`: array of additional languages to use astyle as code formatter. For example: `["haxe"]`. (You don't have to enable the language in astyle config)
 
 ## FAQ

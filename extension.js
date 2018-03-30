@@ -9,11 +9,18 @@ class AstyleFormatter {
         this.statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
     }
 
+    getFilesizeInBytes(filename) {
+        const stats = fs.statSync(filename)
+        const fileSizeInBytes = stats.size
+        return fileSizeInBytes
+    }
+
     // interface required by vscode.DocumentFormattingEditProvider
     provideDocumentFormattingEdits(document, options, token) {
         return new Promise((resolve, reject) => {
             let astyleBinPath = vscode.workspace.getConfiguration('astyle')['executable'] || 'astyle';
             let astyleRcPath = vscode.workspace.getConfiguration('astyle')['astylerc'];
+            const astyleMaxBufferMultiplier = vscode.workspace.getConfiguration('astyle')['max_buffer_multipler'];
             let args = vscode.workspace.getConfiguration('astyle')['cmd_options'] || [];
 
             if (astyleRcPath) {
@@ -25,8 +32,14 @@ class AstyleFormatter {
             });
 
             astyleBinPath = astyleBinPath.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
+            
+            const defaultMaxBufferSize = 200 * 1024;
+            const maxBufferMultiplierSize = this.getFilesizeInBytes(document.fileName) * astyleMaxBufferMultiplier;
+            // Assume that the formatting/expansion of the document could double it's size
+            // Make sure the minimum size is still the default for execFile::maxBuffer
+            const maxBufferSize = Math.max(defaultMaxBufferSize, maxBufferMultiplierSize);
 
-            let astyle = childProcess.execFile(astyleBinPath, args, {}, (err, stdout, stderr) => {
+            let astyle = childProcess.execFile(astyleBinPath, args, {maxBuffer: maxBufferSize}, (err, stdout, stderr) => {
                 if (err && err.code == 'ENOENT') {
                     vscode.window.showErrorMessage('Can\'t find astyle. (' + astyleBinPath + ')');
                     reject(null);
@@ -34,7 +47,7 @@ class AstyleFormatter {
                 }
 
                 if (err) {
-                    vscode.window.showErrorMessage('Failed to launch astyle. (reason: "' + stderr.split(/\r\n|\r|\n/g).join(',') + '")');
+                    vscode.window.showErrorMessage('Failed to launch astyle. (reason: "' + stderr.split(/\r\n|\r|\n/g).join(',') + ' ' + err + '")');
                     reject(null);
                     return;
                 }
