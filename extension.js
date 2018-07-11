@@ -28,10 +28,10 @@ class AstyleFormatter {
             }
 
             args.forEach((item, index) => {
-                args[index] = item.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
+                args[index] = item.replace(/(\${workspaceRoot})|(\${workspaceFolder})/g, vscode.workspace.rootPath);
             });
 
-            astyleBinPath = astyleBinPath.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
+            astyleBinPath = astyleBinPath.replace(/(\${workspaceRoot})|(\${workspaceFolder})/g, vscode.workspace.rootPath);
             
             const defaultMaxBufferSize = 200 * 1024;
             const maxBufferMultiplierSize = this.getFilesizeInBytes(document.fileName) * astyleMaxBufferMultiplier;
