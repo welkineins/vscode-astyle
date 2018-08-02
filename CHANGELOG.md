@@ -33,3 +33,7 @@
 ### 0.8
 
 - Support large file format (> 200K). Thanks to @davidritter.
+
+### 0.9
+
+- Support variable `${workspaceFolder}`
