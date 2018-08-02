@@ -16,7 +16,7 @@ class AstyleFormatter {
     }
 
     // interface required by vscode.DocumentFormattingEditProvider
-    provideDocumentFormattingEdits(document, options, token) {
+    provideDocumentRangeFormattingEdits(document, range, options, token) {
         return new Promise((resolve, reject) => {
             let astyleBinPath = vscode.workspace.getConfiguration('astyle')['executable'] || 'astyle';
             let astyleRcPath = vscode.workspace.getConfiguration('astyle')['astylerc'];
@@ -52,7 +52,7 @@ class AstyleFormatter {
                     return;
                 }
 
-                let editors = this.generateTextEditors(document, stdout);
+                let editors = this.generateTextEditors(document, stdout, range);
                 this.updateStatusBar(editors);
                 resolve(editors);
             });
@@ -64,7 +64,7 @@ class AstyleFormatter {
         });
     }
 
-    generateTextEditors(document, formattedText) {
+    generateTextEditors(document, formattedText, range) {
         let dmp = new diffMatchPatch.diff_match_patch();
         let diffs = dmp.diff_main(document.getText(), formattedText.replace(/\r\n|\r|\n/g, document.eol == 2 ? '\r\n' : '\n'));
         let editors = [];
@@ -86,14 +86,16 @@ class AstyleFormatter {
 
             switch (op) {
                 case diffMatchPatch.DIFF_INSERT:
-                    editors.push(vscode.TextEdit.insert(start, text));
+                    if(range.start.line <= line && range.end.line >= line)
+                        editors.push(vscode.TextEdit.insert(start, text));
                     // this new part should not affect counting of original document
                     line = start.line;
                     character = start.character;
                     break;
                 case diffMatchPatch.DIFF_DELETE:
                     let end = new vscode.Position(line, character);
-                    editors.push(vscode.TextEdit.delete(new vscode.Range(start, end)));
+                    if(range.start.line <= line && range.end.line >= line)
+                        editors.push(vscode.TextEdit.delete(new vscode.Range(start, end)));
                     break;
                 case diffMatchPatch.DIFF_EQUAL:
                     break;
@@ -135,7 +137,7 @@ function activate(context) {
             return;
         }
 
-        let disposable = vscode.languages.registerDocumentFormattingEditProvider(language, formatter);
+        let disposable = vscode.languages.registerDocumentRangeFormattingEditProvider(language, formatter);
         context.subscriptions.push(disposable);
     });
 
