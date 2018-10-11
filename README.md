@@ -26,7 +26,7 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 ## FAQ
 
 - Q1. How to avoid conflict with ClangFormat in C/C++ package
-- A1. VSCode is not support dominate code formatter but with scores, and it two formatter has same score, it choose the later one. However, in the latest version of C/C++ package, you can disable ClangFormat with options `"C_Cpp.formatting" : "disabled"`. (Thanks to @BillDenton notes.)
+- A1. VSCode is not support dominate code formatter but with scores, and if two formatter has same score, it choose the later one. However, in the latest version of C/C++ package, you can disable ClangFormat with options `"C_Cpp.formatting" : "disabled"`. (Thanks to @BillDenton notes.)
 
 ## Source code
 
