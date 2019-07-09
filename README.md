@@ -10,11 +10,13 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 
 ## How to Start
 
-1. Download Astyle from http://astyle.sourceforge.net/. (On Linux, you can use apt-get)
-1. Prepare your style by editting astylerc and put it in the search path. (see the link first: http://astyle.sourceforge.net/astyle.html#_Option_Files)
-1. Make sure Astyle executable is in your system $PATH or add path to configration. 
-1. Enable supported languages in configration. (C and C++ are enabled by default)
-1. When you open a supoprted language file, you can find 'Format' in context menu or just shortcut Shift-Alt-F.
+1. Download Astyle from http://astyle.sourceforge.net/
+   1.  On Ubuntu/Debian, you can run `apt-get install astyle`
+   2.  On Windows, you could run `choco install astyle`, provided you have [chocolatey](https://chocolatey.org/install) installed.
+2. Prepare your style by editting astylerc and put it in the search path. (see the link first: http://astyle.sourceforge.net/astyle.html#_Option_Files)
+3. Make sure Astyle executable is in your system $PATH or add path to configration. 
+4. Enable supported languages in configration. (C and C++ are enabled by default)
+5. When you open a supoprted language file, you can find 'Format' in context menu or just shortcut Shift-Alt-F.
 
 ## Configuration
 
