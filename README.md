@@ -4,17 +4,19 @@ This extension allows you to run Artistic Style(Astyle) on Visual Studio Code to
 
 ## Installation
 
-Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
+Open the command palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> or <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>) and run the following command:
 
-> ext install vscode-astyle
+```bash
+ext install vscode-astyle
+```
 
 ## How to Start
 
 1. Download Astyle from http://astyle.sourceforge.net/. (On Linux, you can use apt-get)
-1. Prepare your style by editting astylerc and put it in the search path. (see the link first: http://astyle.sourceforge.net/astyle.html#_Option_Files)
-1. Make sure Astyle executable is in your system $PATH or add path to configration. 
+1. Prepare your style by editing astylerc and put it in the search path. (see the link first: http://astyle.sourceforge.net/astyle.html#_Option_Files)
+1. Make sure the Astyle executable is in your system $PATH or add path to configration. 
 1. Enable supported languages in configration. (C and C++ are enabled by default)
-1. When you open a supoprted language file, you can find 'Format' in context menu or just shortcut Shift-Alt-F.
+1. When you open a supported language file, you can find 'Format' in context menu or just use the shortcut <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd>.
 
 ## Configuration
 
@@ -30,5 +32,6 @@ Open the command palette (Ctrl-Shift-P / Cmd-Shift-P)
 
 ## Source code
 
-Available on github: https://github.com/welkineins/vscode-astyle
-Issue on github: https://github.com/welkineins/vscode-astyle/issues
+Available on GitHub: https://github.com/welkineins/vscode-astyle
+
+Issues on GitHub: https://github.com/welkineins/vscode-astyle/issues
